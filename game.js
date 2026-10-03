@@ -110,6 +110,18 @@ function hideScreens() {
 
 function startGame() {
 
+  const bgm =
+    document.getElementById("bgm");
+
+  if (bgm) {
+
+    bgm.volume = 0.25;
+    bgm.loop = true;
+
+    bgm.play().catch(() => {});
+
+  }
+
   const startButton =
     document.getElementById("startButton");
 
@@ -125,7 +137,17 @@ function startGame() {
 ======================================== */
 
 function selectCharacter(character) {
+const bgm =
+    document.getElementById("bgm");
 
+  if (bgm && bgm.paused) {
+
+    bgm.volume = 0.25;
+    bgm.loop = true;
+
+    bgm.play().catch(() => {});
+
+  }
   selectedCharacter = character;
 
   foundClues.clear();
