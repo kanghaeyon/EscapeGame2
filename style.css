@@ -1,0 +1,909 @@
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  min-height: 100%;
+
+  font-family: "Malgun Gothic", sans-serif;
+
+  background: #17151b;
+  color: white;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  font-family: inherit;
+}
+
+
+/* =========================
+   전체 게임
+========================= */
+
+#game {
+  width: 100%;
+  max-width: 520px;
+
+  min-height: 100vh;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background: #211d25;
+}
+
+
+.screen {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 20px 14px;
+}
+
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================
+   시작 화면
+========================= */
+
+#titleScreen {
+  text-align: center;
+
+  padding-top: 100px;
+
+  background:
+    linear-gradient(
+      rgba(30, 23, 30, .35),
+      rgba(30, 23, 30, .75)
+    ),
+    #d8b6aa;
+}
+
+
+#titleScreen h1 {
+  font-size: 38px;
+
+  margin: 0;
+}
+
+
+.subtitle {
+  margin-top: 5px;
+
+  opacity: .8;
+}
+
+
+.character-select {
+  width: 90%;
+
+  margin: 60px auto 0;
+
+  padding: 28px 18px;
+
+  border-radius: 22px;
+
+  background: rgba(255,255,255,.88);
+
+  color: #493a3a;
+}
+
+
+.character-select h2 {
+  font-size: 18px;
+
+  margin-top: 0;
+}
+
+
+.character-button {
+  width: 80%;
+
+  margin: 8px;
+
+  padding: 15px;
+
+  border: 0;
+
+  border-radius: 15px;
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  background: #efb4bd;
+
+  color: #5c3d42;
+}
+
+
+/* =========================
+   위쪽 정보
+========================= */
+
+.top-bar {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 12px;
+
+  font-weight: bold;
+}
+
+
+/* =========================
+   방 공통
+========================= */
+
+#room {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 9 / 14;
+
+  overflow: hidden;
+
+  border: 5px solid #68473d;
+
+  border-radius: 12px;
+}
+
+
+/* =========================
+   바닥 줄
+========================= */
+
+#room::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  top: 40%;
+  bottom: 0;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+
+      transparent 0,
+      transparent 68px,
+
+      rgba(95,55,40,.15) 69px,
+      rgba(95,55,40,.15) 71px
+    );
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+
+/* =========================
+   민디 방 배경
+========================= */
+
+#room.mindy-room {
+  background:
+    linear-gradient(
+      to bottom,
+
+      #f8f4ee 0%,
+      #f8f4ee 39%,
+
+      #b77f5b 39%,
+      #c89167 40%,
+
+      #c89167 100%
+    );
+}
+
+
+/* =========================
+   민둥 방 배경
+========================= */
+
+#room.mindoong-room {
+  background:
+    linear-gradient(
+      to bottom,
+
+      #4a342a 0%,
+      #4a342a 39%,
+
+      #87572f 39%,
+      #9b693c 40%,
+
+      #9b693c 100%
+    );
+}
+
+
+/* =========================
+   가구 공통
+========================= */
+
+#room button.object {
+  position: absolute;
+
+  display: block;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  outline: 0;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  z-index: 3;
+}
+
+
+#room button.object > img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  pointer-events: none;
+
+  mix-blend-mode: multiply;
+}
+
+
+#room button.object:focus {
+  outline: none;
+}
+
+
+#room button.object:active {
+  transform: scale(.97);
+}
+
+
+/* =================================================
+   민디 방 배치
+================================================= */
+
+
+/* 창문 */
+
+#room.mindy-room button.window {
+  left: 5%;
+  top: 5%;
+
+  width: 24%;
+  height: 18%;
+}
+
+
+#room.mindy-room button.window > img {
+  object-fit: fill !important;
+}
+
+
+/* 액자 */
+
+#room.mindy-room button.frame {
+  left: 36%;
+  top: 6%;
+
+  width: 18%;
+  height: 14%;
+}
+
+
+/* TV */
+
+#room.mindy-room button.tv {
+  left: 4%;
+  top: 24%;
+
+  width: 42%;
+  height: 25%;
+
+  z-index: 4;
+}
+
+
+/* 화분 */
+
+#room.mindy-room button.plant {
+  left: 48%;
+  top: 30%;
+
+  width: 19%;
+  height: 20%;
+
+  z-index: 5;
+}
+
+
+/* 문 */
+
+#room.mindy-room button.door {
+  right: -2%;
+
+  top: 12%;
+
+  width: 39%;
+  height: 47%;
+
+  z-index: 2;
+}
+
+
+#room.mindy-room button.door > img {
+  object-fit: contain !important;
+
+  transform: scale(1);
+
+  transform-origin: center bottom;
+}
+
+
+/* 수납장 */
+
+#room.mindy-room button.cabinet {
+  right: 5%;
+  top: 48%;
+
+  width: 30%;
+  height: 19%;
+
+  z-index: 4;
+}
+
+
+/* 소파 */
+
+#room.mindy-room button.sofa {
+  left: 6%;
+
+  bottom: 15%;
+
+  width: 45%;
+  height: 25%;
+
+  z-index: 4;
+}
+
+
+/* 러그 */
+
+#room.mindy-room button.rug {
+  left: 12%;
+
+  bottom: 3%;
+
+  width: 58%;
+  height: 21%;
+
+  z-index: 1;
+}
+
+
+/* =================================================
+   민둥 방 배치
+================================================= */
+
+
+/* 창문 */
+
+#room.mindoong-room button.window {
+  left: 6%;
+  top: 5%;
+
+  width: 25%;
+  height: 19%;
+
+  z-index: 3;
+}
+
+
+/* 액자 */
+
+#room.mindoong-room button.frame {
+  left: 36%;
+  top: 7%;
+
+  width: 17%;
+  height: 13%;
+
+  z-index: 3;
+}
+
+
+/* TV + TV장 */
+
+#room.mindoong-room button.tv {
+  left: 6%;
+  top: 24%;
+
+  width: 43%;
+  height: 22%;
+
+  z-index: 4;
+}
+
+
+/* 작은 화분 */
+
+#room.mindoong-room button.plant {
+  left: 52%;
+  top: 27%;
+
+  width: 17%;
+  height: 18%;
+
+  z-index: 5;
+}
+
+
+/* 문 */
+
+#room.mindoong-room button.door {
+  right: 5%;
+
+  top: 17%;
+
+  width: 27%;
+  height: 36%;
+
+  z-index: 3;
+}
+
+
+#room.mindoong-room button.door > img {
+  object-fit: contain !important;
+
+  transform: scale(1);
+
+  transform-origin: center bottom;
+}
+
+
+/* 서랍장 */
+
+#room.mindoong-room button.cabinet {
+  right: 6%;
+
+  top: 53%;
+
+  width: 20%;
+  height: 20%;
+
+  z-index: 4;
+}
+
+
+/* 파란 소파 */
+
+#room.mindoong-room button.sofa {
+  left: 6%;
+
+  bottom: 14%;
+
+  width: 45%;
+  height: 24%;
+
+  z-index: 4;
+}
+
+
+/* 파란 러그 */
+
+#room.mindoong-room button.rug {
+  left: 8%;
+
+  bottom: 3%;
+
+  width: 48%;
+  height: 20%;
+
+  z-index: 1;
+}
+
+
+/* =========================
+   캐릭터
+========================= */
+
+#player {
+  position: absolute;
+
+  left: 43%;
+  top: 70%;
+
+  width: 70px;
+  height: 105px;
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+
+#playerImage {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+/* =========================
+   메시지
+========================= */
+
+#message {
+  min-height: 54px;
+
+  margin: 14px 5px 0;
+
+  text-align: center;
+
+  line-height: 1.5;
+
+  color: #f5edf2;
+}
+
+
+/* =========================
+   조사 화면
+========================= */
+
+#detailScreen {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #1d1920;
+}
+
+
+.detail-card {
+  width: 94%;
+
+  min-height: 70vh;
+
+  padding: 25px 18px;
+
+  border-radius: 24px;
+
+  text-align: center;
+
+  background: #f5e8df;
+
+  color: #4c3838;
+}
+
+
+#detailImage {
+  display: block;
+
+  width: 90%;
+
+  height: 330px;
+
+  margin: 20px auto;
+
+  object-fit: contain;
+
+  border-radius: 18px;
+
+  background: #ead8cc;
+
+  mix-blend-mode: multiply;
+}
+
+
+#detailText {
+  min-height: 70px;
+
+  font-size: 17px;
+
+  line-height: 1.6;
+}
+
+
+.back-button {
+  width: 90%;
+
+  margin-top: 20px;
+
+  padding: 15px;
+
+  border: 0;
+
+  border-radius: 14px;
+
+  background: #8c665b;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: bold;
+}
+
+
+/* =========================
+   비밀번호
+========================= */
+
+#keypadScreen {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+.keypad-box {
+  width: 92%;
+
+  padding: 35px 20px;
+
+  border-radius: 24px;
+
+  background: #f6e7dd;
+
+  color: #4d3939;
+}
+
+
+#passwordInput {
+  display: block;
+
+  width: 75%;
+
+  margin: 25px auto;
+
+  padding: 18px;
+
+  text-align: center;
+
+  font-size: 32px;
+
+  letter-spacing: 12px;
+
+  border: 3px solid #bd8b82;
+
+  border-radius: 14px;
+
+  background: white;
+}
+
+
+.keypad-box > button:not(.back-button) {
+  width: 75%;
+
+  padding: 15px;
+
+  border: 0;
+
+  border-radius: 14px;
+
+  background: #df9ba8;
+
+  color: white;
+
+  font-size: 18px;
+
+  font-weight: bold;
+}
+
+
+#passwordMessage {
+  min-height: 30px;
+}
+
+
+/* =========================
+   엔딩
+========================= */
+
+#endingScreen {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle,
+      #f8c7d1,
+      #c78898 60%,
+      #51343e
+    );
+}
+
+
+.ending-box h1 {
+  font-size: 34px;
+}
+
+
+.ending-box p {
+  font-size: 20px;
+}
+
+
+/* =========================
+   작은 휴대폰
+========================= */
+
+@media (max-width: 390px) {
+
+  .screen {
+    padding: 12px 9px;
+  }
+
+
+  #detailImage {
+    height: 270px;
+  }
+
+
+  #player {
+    width: 60px;
+    height: 90px;
+  }
+
+
+  .ending-box h1 {
+    font-size: 28px;
+  }
+
+}
+/* =================================
+   👻 점프스케어
+================================= */
+
+#jumpscare {
+  position: fixed;
+
+  left: 0;
+  top: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: black;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 99999;
+
+  overflow: hidden;
+}
+
+
+#jumpscare img {
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transform: scale(1);
+
+}
+
+
+/* 팍 튀어나오는 효과 */
+
+#jumpscare.scare img {
+
+  animation: jumpScare 0.35s ease-out;
+
+}
+
+
+@keyframes jumpScare {
+
+  0% {
+
+    transform: scale(0.35);
+
+  }
+
+
+  25% {
+
+    transform: scale(1.4);
+
+  }
+
+
+  55% {
+
+    transform: scale(1.05);
+
+  }
+
+
+  100% {
+
+    transform: scale(1.25);
+
+  }
+
+}
+/* =========================
+   📱 모바일 조작 버튼
+========================= */
+
+#mobileControls {
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+  user-select: none;
+}
+
+#mobileControls button {
+  width: 58px;
+  height: 48px;
+  margin: 3px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.85);
+  color: #3d3035;
+
+  font-size: 21px;
+  font-weight: bold;
+
+  touch-action: none;
+}
+
+#mobileControls #interactBtn {
+  width: 78px;
+  background: #df9ba8;
+  color: white;
+}

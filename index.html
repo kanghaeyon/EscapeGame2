@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
+  <title>거실 탈출 - No.2</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+  <main id="game">
+
+
+    <!-- =========================
+         시작 화면
+    ========================== -->
+
+    <section
+      id="titleScreen"
+      class="screen"
+    >
+
+      <h1>
+        거실 탈출
+      </h1>
+
+      <p class="subtitle">
+        No.2
+      </p>
+<button id="startButton" onclick="startGame()">게임 시작</button>
+
+      <div class="character-select">
+
+        <h2>
+          플레이할 캐릭터를 선택하세요
+        </h2>
+
+
+        <button
+          class="character-button"
+          onclick="selectCharacter('mindy')"
+        >
+          민디
+        </button>
+
+
+        <button
+          class="character-button"
+          onclick="selectCharacter('mindoong')"
+        >
+          민둥
+        </button>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         거실
+    ========================== -->
+
+    <section
+      id="livingRoom"
+      class="screen hidden"
+    >
+
+
+      <div class="top-bar">
+
+        <span id="characterName">
+          민디
+        </span>
+
+        <span id="clueCount">
+          단서 0 / 4
+        </span>
+
+      </div>
+
+
+
+      <div
+        id="room"
+        class="mindy-room"
+      >
+
+
+        <!-- 창문 -->
+
+        <button
+          class="object window"
+          onclick="openObject('window')"
+        >
+
+          <img
+            src="images/mindy_window.png"
+            alt="창문"
+          >
+
+        </button>
+
+
+
+        <!-- 액자 -->
+
+        <button
+          class="object frame"
+          onclick="openObject('frame')"
+        >
+
+          <img
+            src="images/mindy_frame.png"
+            alt="액자"
+          >
+
+        </button>
+
+
+
+        <!-- TV -->
+
+        <button
+          class="object tv"
+          onclick="openObject('tv')"
+        >
+
+          <img
+            src="images/mindy_tv.png"
+            alt="TV"
+          >
+
+        </button>
+
+
+
+        <!-- 화분 -->
+
+        <button
+          class="object plant"
+          onclick="openObject('plant')"
+        >
+
+          <img
+            src="images/mindy_plant.png"
+            alt="화분"
+          >
+
+        </button>
+
+
+
+        <!-- 수납장 -->
+
+        <button
+          class="object cabinet"
+          onclick="openObject('cabinet')"
+        >
+
+          <img
+            src="images/mindy_cabinet.png"
+            alt="수납장"
+          >
+
+        </button>
+
+
+
+        <!-- 소파 -->
+
+        <button
+          class="object sofa"
+          onclick="openObject('sofa')"
+        >
+
+          <img
+            src="images/mindy_sofa.png"
+            alt="소파"
+          >
+
+        </button>
+
+
+
+        <!-- 러그 -->
+
+        <button
+          class="object rug"
+          onclick="openObject('rug')"
+        >
+
+          <img
+            src="images/mindy_rug.png"
+            alt="러그"
+          >
+
+        </button>
+
+
+
+        <!-- 문 -->
+
+        <button
+          class="object door"
+          onclick="openKeypad()"
+        >
+
+          <img
+            src="images/mindy_door.png"
+            alt="문"
+          >
+
+        </button>
+
+
+
+        <!-- 플레이어 -->
+
+        <div id="player">
+
+          <img
+            id="playerImage"
+            src="images/mindy_down.png"
+            alt="민디"
+          >
+
+        </div>
+
+
+      </div>
+
+
+      <p id="message">
+        방 안을 돌아다니며 단서를 찾아보자.
+      </p>
+<div id="mobileControls">
+
+  <button id="upBtn">▲</button>
+
+  <div>
+    <button id="leftBtn">◀</button>
+    <button id="interactBtn">조사</button>
+    <button id="rightBtn">▶</button>
+  </div>
+
+  <button id="downBtn">▼</button>
+
+</div>
+
+    </section>
+
+
+
+    <!-- =========================
+         조사 화면
+    ========================== -->
+
+    <section
+      id="detailScreen"
+      class="screen hidden"
+    >
+
+      <div class="detail-card">
+
+        <h2 id="detailTitle">
+          조사하기
+        </h2>
+
+
+        <img
+          id="detailImage"
+          src=""
+          alt="조사 중인 물건"
+        >
+
+
+        <p id="detailText">
+        </p>
+
+
+        <button
+          class="back-button"
+          onclick="backToRoom()"
+        >
+          ← 거실로 돌아가기
+        </button>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         비밀번호
+    ========================== -->
+
+    <section
+      id="keypadScreen"
+      class="screen hidden"
+    >
+
+      <div class="keypad-box">
+
+        <h2>
+          현관문
+        </h2>
+
+
+        <p>
+          네 자리 비밀번호를 입력하세요.
+        </p>
+
+
+        <input
+          id="passwordInput"
+          type="tel"
+          inputmode="numeric"
+          maxlength="4"
+          placeholder="••••"
+        >
+
+
+        <button onclick="checkPassword()">
+          확인
+        </button>
+
+
+        <p id="passwordMessage">
+        </p>
+
+
+        <button
+          class="back-button"
+          onclick="backToRoom()"
+        >
+          ← 거실로 돌아가기
+        </button>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         엔딩
+    ========================== -->
+
+    <section
+      id="endingScreen"
+      class="screen hidden"
+    >
+
+      <div class="ending-box">
+
+        <p class="small-ending">
+          철컥—
+        </p>
+
+        <h1>
+          🎂 HAPPY BIRTHDAY 🎂
+        </h1>
+
+        <p>
+          10월 12일
+        </p>
+
+        <p>
+          탈출 성공!
+        </p>
+
+      </div>
+
+    </section>
+
+<!-- 점프스케어 -->
+<div id="jumpscare" class="hidden">
+  <img src="images/ghost.png" alt="">
+</div>
+  </main>
+<audio id="scareSound" src="sounds/jumpscare.mp3"></audio>
+<audio id="doorSound" src="sounds/door_open.mp3"></audio>
+<audio id="drawerSound" src="sounds/drawer_open.mp3"></audio>
+
+<script src="game.js"></script>
+</body>
+
+</html>
